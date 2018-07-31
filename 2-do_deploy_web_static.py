@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 from fabric.api import *
-import os
+
 env.hosts = ['104.196.66.195', '35.237.47.86']
 env.key_filename = "~/.ssh/holberton"
 
 def do_deploy(archive_path):
     "deploys new version of  codes"
+    ap = archive_path.split("/")[1]
+    apsans = ap.split(".")[0]
     try:
-        ap = archive_path.split("/")[1]
-        apsans = ap.split(".")[0]
         put(archive_path, "/tmp/{}".format(ap))
         run("mkdir -p /data/web_static/releases/{}".format(apsans))
         run("tar -xfz /tmp/{} -C /data/web_static/releases/{}".format(ap, apsans))
