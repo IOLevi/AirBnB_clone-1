@@ -1,8 +1,21 @@
 #!/usr/bin/python3
 from fabric.api import *
+from datetime import datetime
+import os
 
 env.hosts = ['104.196.66.195', '35.237.47.86']
 env.key_filename = "~/.ssh/holberton"
+env.user = "ubuntu"
+
+def do_pack():
+    "packs a tar archive"
+    fn = "web_static_{}.tgz".format(datetime.now().strftime("%Y%m%d%H%M%S"))
+    local("mkdir -p versions")
+    local("tar -cvzf versions/{} web_static".format(fn))
+    if os.path.exists("versions/{}".format(fn)):
+        return(os.path.abspath("versions/{}".format(fn)))
+    else:
+        return None
 
 def do_deploy(archive_path):
     "deploys new version of  codes"
