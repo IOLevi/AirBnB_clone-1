@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#/usr/bin/python3
 from fabric.api import *
 from datetime import datetime
 import os
@@ -13,7 +13,7 @@ def do_pack():
     local("mkdir -p versions")
     local("tar -cvzf versions/{} web_static".format(fn))
     if os.path.exists("versions/{}".format(fn)):
-        return(os.path.abspath("versions/{}".format(fn)))
+        return "versions/{}".format(fn)
     else:
         return None
 
@@ -24,9 +24,9 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/{}".format(ap))
         run("mkdir -p /data/web_static/releases/{}".format(apsans))
-        run("tar -xfz /tmp/{} -C /data/web_static/releases/{}".format(ap, apsans))
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}".format(ap, apsans))
         run("rm /tmp/{}".format(ap))
-        run("mv /data/web_static_releases/{}/web_static/* /data/web_static/releases/{}/".format(apsans, apsans))
+        run("mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/".format(apsans, apsans))
         run("rm -rf /data/web_static/releases/{}/web_static".format(apsans))
         run("rm -rf /data/web_static/current")
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(apsans))
