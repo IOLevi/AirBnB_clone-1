@@ -41,10 +41,11 @@ def do_deploy(archive_path):
         print(e)
         return False
 
+
 def deploy():
     "deploy"
     a = do_pack()
-        if a is None:
-            return False
-        else:
-            return do_deploy(a)
+    if a is None:
+        return False
+    else:
+        return do_deploy(a)
