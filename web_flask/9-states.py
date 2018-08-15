@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 #starts a Flask web application
 import os
@@ -37,6 +38,38 @@ def city_by_state():
 
     a = list(a.values())
     return render_template('8-cities_by_states.html', a=a)
+
+@app.route('/states', strict_slashes = False)
+def get_state():
+    "display an html page with all states in dbstorage"
+
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        a = storage.all(State)
+    else:
+        a = storage.all("State")
+
+    a = list(a.values())
+    return render_template('9-states.py', a=a)
+
+
+@app.route('/states/<path:id>', strict_slashes = False)
+def get_state_id(id):
+    "displays an html page if id found"
+
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        a = storage.all(State)
+    else:
+        a = storage.all("State")
+
+    a = list(a.values())
+    b = []
+
+    # only take the states that match the input id
+    for state in a:
+        if state.id == id:
+            b.append(state)
+
+    return render_templates('9-states.py', b=b)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
