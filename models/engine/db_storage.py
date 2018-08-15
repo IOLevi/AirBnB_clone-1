@@ -25,24 +25,19 @@ class DBStorage:
 
     def all(self, cls=None):
         "query the current db for all objects depending on cls type"
-        a = {}
-        if cls:
-            for i in self.__session.query(cls).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
+        dict_db = {}
+        if cls is not None:
+            entry = self.__session.query(models.classes[cls]).all()
+            for obj in entry:
+                key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                dict_db[key] = obj
         else:
-            for i in self.__session.query(User).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-            for i in self.__session.query(State).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-            for i in self.__session.query(City).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-            for i in self.__session.query(Amenity).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-            for i in self.__session.query(Place).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-            for i in self.__session.query(Review).all():
-                a["{}.{}".format(i.__class__.__name__, i.id)] = i
-        return a
+            for k, v in models.classes.items():
+                if k != "BaseModel":
+                    for obj in sel.__session.query(v).all():
+                        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                        dict_db[key] = obj
+        return dict_db
 
     def new(self, obj):
         "add the object to the current database session"
@@ -65,3 +60,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
         self.__session = Session()
+
+    def close(self):
+        "calls remove method on the private session attribute; or close() on the class Session"
+        self.__session.close()

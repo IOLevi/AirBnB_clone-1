@@ -33,7 +33,7 @@ class BaseModel:
             self.created_at = datetime.datetime.now()
             self.updated_at = datetime.datetime.now()
         else:
-            if kwargs["created_at"]:  # created at already exists
+            if "created_at" in kwargs.keys():  # created at already exists
                 kwargs["created_at"] = datetime.datetime.strptime\
                                        (kwargs
                                         ["created_at"],
