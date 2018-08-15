@@ -49,7 +49,7 @@ def get_state():
         a = storage.all("State")
 
     a = list(a.values())
-    return render_template('9-states.py', a=a)
+    return render_template('9-states.html', a=a)
 
 
 @app.route('/states/<path:id>', strict_slashes = False)
@@ -69,7 +69,7 @@ def get_state_id(id):
         if state.id == id:
             b.append(state)
 
-    return render_templates('9-states.py', b=b)
+    return render_template('9-states.html', b=b)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

@@ -15,22 +15,19 @@
 </UL>
 {% endif %}
 
-	{% if b is defined %}
-		{% if b is equalto [] %}
-		<H1>Not found!</H1>
-		{% else %}
-		{% for state in a|sort(attribute='name' %}
-		<H1>State: {{state.name}}</H1>
-		<H3>Cities:</H3>
-			{% for city in state.cities|sort(attribute='name' %}
-			<LI>{{city.id}}: <B>{{city.name}}</B></LI>
-			{% endfor %}
-
+{% if b is defined and b %}
+	{% for state in b|sort(attribute='name') %}
+	<H1>State: {{state.name}}</H1>
+	<H3>Cities:</H3>
+	<UL>
+		{% for city in state.cities|sort(attribute='name') %}
+		<LI>{{city.id}}: <B>{{city.name}}</B></LI>
 		{% endfor %}
+	</UL>
+	{% endfor %}
 
-
-		{ % endif %}
-
-	{% endif %}
+{% elif b is defined and not b %}
+<H1>Not found!</H1>
+{% endif %}
 </BODY>
 </HTML>
