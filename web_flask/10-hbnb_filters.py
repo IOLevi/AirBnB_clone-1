@@ -83,6 +83,7 @@ def get_filters():
         a = storage.all("State")
         b = storage.all("Amenity")
 
+    a = list(a.values())
 
     return render_template('10-hbnb_filters.html', a=a, b=b)
 
