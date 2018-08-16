@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello_hbnb():
+def intro_hbnb():
     'returns hello hbnb for root index'
     return "Hello HBNB!"
 
