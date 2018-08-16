@@ -30,7 +30,7 @@ def c_is_fun(text):
     '/python/<path:text>',
     strict_slashes=False,
     defaults={
-        'text': 'is_cool'})
+        'text': 'is cool'})
 def python_is_cool(text):
     "returns 'Python' and value of text, with default python is cool"
     text = text.replace("_", " ")
